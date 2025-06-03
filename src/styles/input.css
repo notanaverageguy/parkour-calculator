@@ -1,0 +1,106 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer theme {
+	:root, :host {
+		--font-sans: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+		--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+	} 
+}
+
+@layer components {
+	.nav-link-base {
+		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-300 dark:border-gray-800 hover:border-gray-600 hover:duration-50 hover:ease-linear;
+	}
+
+	.section-box {
+		@apply bg-white p-8 border border-gray-200 rounded-lg dark:bg-gray-950 dark:border-gray-800 hover:border-gray-400 hover:duration-100 hover:ease-linear duration-[1s] ease-in-out
+	}
+
+	.heading-section {
+		@apply text-2xl font-semibold mb-6 dark:text-gray-300 duration-[1s] ease-in-out
+	}
+
+	.error-message {
+		@apply text-sm text-red-300 mt-1 min-h-[1.25rem]
+	}
+	
+	.input-box {
+		@apply relative mb-6 
+	}
+
+	.input-label {
+		@apply block mb-2 text-base font-medium dark:text-gray-300 duration-[1s] ease-in-out
+	}
+
+	.input-field { 
+		@apply w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xl focus:outline-none hover:border-gray-600 focus:border-gray-700 dark:text-gray-300 dark:border-gray-800 dark:bg-gray-900 duration-[1s] ease-in-out
+	}
+
+	.results-container {
+		@apply mt-6 space-y-4
+	}
+
+	.result-box {
+		@apply p-4 bg-zinc-200 rounded-lg dark:bg-gray-900 duration-[1s] ease-in-out
+	}
+
+	.result-label {
+		@apply block text-sm text-gray-500 dark:text-gray-400
+	}
+
+	.result-value {
+		@apply text-xl font-semibold dark:text-gray-300
+	}
+}
+
+body {
+	font-family: var(--font-sans);
+	@apply text-gray-900 dark:bg-gray-950 duration-[1s] ease-in-out;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+@theme {
+  --color-gray-50: oklch(0.984 0.0 0.0);
+  --color-gray-100: oklch(0.968 0.0 0.0);
+  --color-gray-200: oklch(0.929 0.0 0.0);
+  --color-gray-300: oklch(0.869 0.0 0.0);
+  --color-gray-400: oklch(0.704 0.0 0.0);
+  --color-gray-500: oklch(0.554 0.0 0.0);
+  --color-gray-600: oklch(0.446 0.0 0.0);
+  --color-gray-700: oklch(0.372 0.0 0.0);
+  --color-gray-800: oklch(0.279 0.0 0.0);
+  --color-gray-900: oklch(0.208 0.0 0.0);
+  --color-gray-950: oklch(0.129 0.0 0.0);
+}
+
+input,
+button,
+select,
+textarea {
+	transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+#graph-container {
+	transition: background-color 0.3s ease, border-color 0.3s ease;
+	padding: 1.5rem;
+	margin-top: 2rem;
+}
+
+#graph {
+	width: 100%;
+	height: 100%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}

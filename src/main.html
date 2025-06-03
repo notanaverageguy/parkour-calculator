@@ -1,0 +1,180 @@
+<!-- TODO: Make navbar a scrolling bar that follows how far the screen is scrolled-->
+<!-- TODO: Add responsivness to page (mostly nav bar)-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Calculator for Roblox: Parkour.\nCan help with XP, levels, combo score, and time management">
+	<meta name="keywords" content="Roblox, Parkour, Roblox Parkour, Hudzell, Mongoose Studio, Calculator, XP">
+	<meta name="author" content="NotAnAverageGuy">
+	<title>Parkour Calculator</title>
+	<link rel="icon" type="image/x-icon" href="./static/favicon.ico">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/themes/light.css" />
+	<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+
+	<link href="./styles/output.css" rel="stylesheet">
+	<script src="./main.js" defer></script>
+	<script src="./background.js" defer></script>
+	
+</head>
+<canvas id="background-canvas" class="fixed -z-10"></canvas>
+<body>
+	<div class="container mx-auto max-w-7xl p-8 grid grid-cols-[250px_1fr] gap-8">
+		<aside class="section-box sticky top-8 h-fit p-6 duration-[1s] ease-in-out">
+			<div class="flex justify-between items-center mb-4">
+				<h2 class="result-value">Navigation</h2>
+				<button id="theme-toggle" class="p-2 rounded-lg hover:bg-accent transition-colors hover:outline-2 dark:outline-white dark:text-white text-black" aria-label="Toggle theme">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="12" cy="12" r="5"/>
+						<line x1="12" y1="1" x2="12" y2="3"/>
+						<line x1="12" y1="21" x2="12" y2="23"/>
+						<line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+						<line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+						<line x1="1" y1="12" x2="3" y2="12"/>
+						<line x1="21" y1="12" x2="23" y2="12"/>
+						<line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+						<line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+					</svg>
+				</button>
+			</div>
+			<ul class="space-y-2">
+				<li><a href="#points-to-level" class="nav-link-base">Points to Level</a></li>
+				<li><a href="#level-range" class="nav-link-base">Level Range</a></li>
+				<li><a href="#time-estimator" class="nav-link-base">Time Estimator</a></li>
+				<li><a href="#points-to-xp" class="nav-link-base">Points to XP</a></li>
+				<li><a href="#combo-score" class="nav-link-base">Combo Score</a></li>
+			</ul>
+		</aside>
+		<main class="space-y-8">
+			<section id="points-to-level" class="section-box">
+				<h2 class="heading-section">Points to Level Converter</h2>
+				<div class=".input-box">
+					<label for="base-level" class="input-label">Base Level</label>
+					<input type="number" id="base-level" min="0" step="1" placeholder="Enter base level" class="input-field" />
+					<div id="base-level-error" class="error-message"></div>
+				</div>
+				<div class=".input-box">
+					<label for="points-to-convert" class="input-label">Points to Convert</label>
+					<input type="number" id="points-to-convert" min="0" step="10000" placeholder="Enter points" class="input-field" />
+					<div id="points-to-convert-error" class="error-message"></div>
+				</div>
+				<div class="results-container">
+					<div class="result-box">
+						<span class="result-label">Resulting Level</span>
+						<span id="result-level" class="result-value">-</span>
+					</div>
+					<div class="result-box">
+						<span class="result-label">Converted XP</span>
+						<span id="converted-xp" class="result-value">-</span>
+					</div>
+				</div>
+			</section>
+			<section id="level-range" class="section-box">
+				<h2 class="heading-section">Level Range Calculator</h2>
+				<div class=".input-box">
+					<label for="start-level" class="input-label">Starting Level</label>
+					<input type="number" id="start-level" min="0" step="1" placeholder="Enter starting level" class="input-field" />
+					<div id="start-level-error" class="error-message"></div>
+				</div>
+				<div class=".input-box">
+					<label for="end-level" class="input-label">Ending Level</label>
+					<input type="number" id="end-level" min="0" step="1" placeholder="Enter ending level" class="input-field" />
+					<div id="end-level-error" class="error-message"></div>
+				</div>
+				<div class="results-container">
+					<div class="result-box">
+						<span class="result-label">Required XP</span>
+						<span id="required-xp" class="result-value">-</span>
+					</div>
+					<div class="result-box">
+						<span class="result-label">Required Points</span>
+						<span id="required-points" class="result-value">-</span>
+					</div>
+				</div>
+			</section>
+			<section id="time-estimator" class="section-box">
+				<h2 class="heading-section">Time Estimator</h2>
+				<div class=".input-box">
+					<label for="time-start-level" class="input-label">Starting Level</label>
+					<input type="number" id="time-start-level" min="0" step="1" placeholder="Enter starting level" class="input-field" />
+					<div id="time-start-level-error" class="error-message"></div>
+				</div>
+				<div class=".input-box">
+					<label for="time-end-level" class="input-label">Ending Level</label>
+					<input type="number" id="time-end-level" min="0" step="1" placeholder="Enter ending level" class="input-field" />
+					<div id="time-end-level-error" class="error-message"></div>
+				</div>
+				<div class=".input-box">
+					<label for="points-per-minute" class="input-label">Points per Minute</label>
+					<input type="number" id="points-per-minute" min="0" step="1000" placeholder="Enter points per minute" class="input-field" />
+					<div id="points-per-minute-error" class="error-message"></div>
+				</div>
+				<div class="results-container">
+					<div class="result-box">
+						<span class="result-label">Estimated Time</span>
+						<span id="estimated-time" class="result-value">-</span>
+					</div>
+				</div>
+			</section>
+			<section id="points-to-xp" class="section-box">
+				<h2 class="heading-section">Points to XP Converter</h2>
+				<div class=".input-box">
+					<label for="points-input" class="input-label">Points</label>
+					<input type="number" id="points-input" min="0" step="10000" placeholder="Enter points" class="input-field" />
+					<div id="points-input-error" class="error-message"></div>
+				</div>
+				<div class="results-container">
+					<div class="result-box">
+						<span class="result-label">Total XP</span>
+						<span id="total-xp" class="result-value">-</span>
+					</div>
+					<div class="result-box">
+						<span class="result-label">XP per Point</span>
+						<span id="xp-per-point" class="result-value">-</span>
+					</div>
+				</div>
+				<div class="mt-8">
+					<h3 class="text-lg font-medium mb-4">Points to XP Relationship</h3>
+					<div class="h-[300px] border border-border rounded-lg bg-background p-4">
+						<div id="graph" ></div>
+					</div>
+				</div>
+			</section>
+			<section id="combo-score" class="section-box">
+				<h2 class="heading-section">Combo Score</h2>
+				<div class=".input-box">
+					<label for="total-combos-input" class="input-label">Total Combos</label>
+					<input type="number" id="total-combos-input" min="0" step="1000" placeholder="Enter total combos" class="input-field" />
+					<div id="total-combos-input-error" class="error-message"></div>
+				</div>
+				<div class=".input-box">
+					<label for="longest-combo-input" class="input-label">Longest Combo</label>
+					<!-- <input type="time" id="longest-combo-input" step="1" placeholder="Enter total combo in miliseconds" class="input-field" /> -->
+					 <input type="text" id="longest-combo-input" placeholder="HH:MM or HH:MM:SS" value="00:00" pattern="^([01]?[0-9]|2[0-3]):[0-5][0-9](:[0-5][0-9])?$" class="input-field">
+					<div id="longest-combo-input-error" class="error-message"></div>
+				</div>
+				<div class=".input-box">
+					<label for="highest-combo-input" class="input-label">Highest Combo</label>
+					<input type="number" id="highest-combo-input" min="0" max="5" step="1" placeholder="Enter highest combo" class="input-field" />
+					<div id="highest-combo-input-error" class="error-message"></div>
+				</div>
+				<div class=".input-box">
+					<label for="combo-breaks-input" class="input-label">Combo Breaks</label>
+					<input type="number" id="combo-breaks-input" min="0" step="1000" placeholder="Enter combo breaks" class="input-field" />
+					<div id="combo-breaks-input-error" class="error-message"></div>
+				</div>
+				<div class="results-container">
+					<div class="result-box">
+						<span class="result-label">Combo Score</span>
+						<span id="combo-score-result" class="result-value">-</span>
+					</div>
+				</div>
+			</section>
+		</main>
+	</div>
+</body>
+</html>
