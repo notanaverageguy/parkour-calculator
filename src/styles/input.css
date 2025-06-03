@@ -10,7 +10,7 @@
 
 @layer components {
 	.nav-link-base {
-		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-300 dark:border-gray-800 hover:border-gray-600 hover:duration-50 hover:ease-linear;
+		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-300 dark:border-gray-800 hover:border-gray-600 hover:duration-50 hover:ease-linear text-center md:text-left
 	}
 
 	.section-box {
