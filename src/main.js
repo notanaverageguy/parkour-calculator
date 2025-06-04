@@ -85,7 +85,7 @@ function calculateTimeEstimate(start, end, ppm) {
 function parseTimeToSeconds(timeStr) {
     const parts = timeStr.split(':').map(Number);
     if (parts.length < 2 || parts.length > 3) return null;
-    const [hours = 0, minutes, seconds] = parts;
+    const [minutes, seconds, hours = 0] = parts;
     if (hours > 23 || minutes > 59 || seconds > 59) return null;
     return (hours * 3600 + minutes * 60 + seconds);
 }
