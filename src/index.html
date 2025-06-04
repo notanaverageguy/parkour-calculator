@@ -1,6 +1,4 @@
 <!-- TODO: Make navbar a scrolling bar that follows how far the screen is scrolled-->
-<!-- TODO: Add responsivness to page (mostly nav bar)-->
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,7 +28,7 @@
 <canvas id="background-canvas" class="fixed -z-10"></canvas>
 <body>
 	<div class="container mx-auto max-w-7xl p-4 grid gap-8 grid-cols-1 md:grid-cols-[250px_1fr]">
-		<aside class="section-box md:sticky top-8 h-fit p-6 duration-[1s] ease-in-out">
+		<aside class="section-box md:sticky top-8 h-fit p-6">
 			<div class="flex justify-between items-center mb-4">
 				<h2 class="result-value">Navigation</h2>
 				<button id="theme-toggle" class="p-2 rounded-lg hover:bg-accent transition-colors hover:outline-2 dark:outline-white dark:text-white text-black" aria-label="Toggle theme">
@@ -49,9 +47,11 @@
 			</div>
 			<ul class="space-y-2">
 				<li><a href="#points-to-level" class="nav-link-base">Points to Level</a></li>
+				<li><a href="#xp-to-level" class="nav-link-base">Xp to Level</a></li>
 				<li><a href="#level-range" class="nav-link-base">Level Range</a></li>
 				<li><a href="#time-estimator" class="nav-link-base">Time Estimator</a></li>
 				<li><a href="#points-to-xp" class="nav-link-base">Points to XP</a></li>
+				<li><a href="#xp-to-points" class="nav-link-base">Xp to Points</a></li>
 				<li><a href="#combo-score" class="nav-link-base">Combo Score</a></li>
 			</ul>
 		</aside>
@@ -71,11 +71,34 @@
 				<div class="results-container">
 					<div class="result-box">
 						<span class="result-label">Resulting Level</span>
-						<span id="result-level" class="result-value">-</span>
+						<span id="result-level" class="result-value" data-output="level">-</span>
 					</div>
 					<div class="result-box">
 						<span class="result-label">Converted XP</span>
-						<span id="converted-xp" class="result-value">-</span>
+						<span id="converted-xp" class="result-value" data-output="xp">-</span>
+					</div>
+				</div>
+			</section>
+			<section id="xp-to-level" class="section-box">
+				<h2 class="heading-section">XP to Level Converter</h2>
+				<div class=".input-box">
+					<label for="base-level" class="input-label">Base Level</label>
+					<input type="number" id="base-level" min="0" step="1" placeholder="Enter base level" class="input-field" />
+					<div id="base-level-error" class="error-message"></div>
+				</div>
+				<div class=".input-box">
+					<label for="points-to-convert" class="input-label">Points to Convert</label>
+					<input type="number" id="xp-to-convert" min="0" step="10000" placeholder="Enter XP" class="input-field" />
+					<div id="xp-to-convert-error" class="error-message"></div>
+				</div>
+				<div class="results-container">
+					<div class="result-box">
+						<span class="result-label">Resulting Level</span>
+						<span id="result-level" class="result-value" data-output="level">-</span>
+					</div>
+					<div class="result-box">
+						<span class="result-label">Point Equivalent</span>
+						<span id="converted-xp" class="result-value" data-output="pts">-</span>
 					</div>
 				</div>
 			</section>
@@ -94,11 +117,11 @@
 				<div class="results-container">
 					<div class="result-box">
 						<span class="result-label">Required XP</span>
-						<span id="required-xp" class="result-value">-</span>
+						<span id="required-x p" class="result-value" data-output="xp">-</span>
 					</div>
 					<div class="result-box">
 						<span class="result-label">Required Points</span>
-						<span id="required-points" class="result-value">-</span>
+						<span id="required-points" class="result-value" data-output="pts">-</span>
 					</div>
 				</div>
 			</section>
@@ -122,7 +145,7 @@
 				<div class="results-container">
 					<div class="result-box">
 						<span class="result-label">Estimated Time</span>
-						<span id="estimated-time" class="result-value">-</span>
+						<span id="estimated-time" class="result-value" data-output="time">-</span>
 					</div>
 				</div>
 			</section>
@@ -136,17 +159,41 @@
 				<div class="results-container">
 					<div class="result-box">
 						<span class="result-label">Total XP</span>
-						<span id="total-xp" class="result-value">-</span>
+						<span id="total-xp" class="result-value" data-output="xp">-</span>
 					</div>
 					<div class="result-box">
 						<span class="result-label">XP per Point</span>
-						<span id="xp-per-point" class="result-value">-</span>
+						<span id="xp-per-point" class="result-value" data-output="ratio">-</span>
 					</div>
 				</div>
 				<div class="mt-8">
-					<h3 class="text-lg font-medium mb-4">Points to XP Relationship</h3>
+					<h3 class="text-lg font-medium mb-4 dark:text-white">Points to XP Relationship</h3>
 					<div class="h-[300px] border border-border rounded-lg bg-background p-4">
-						<div id="graph" ></div>
+						<div id="points-xp-graph" class="graph"></div>
+					</div>
+				</div>
+			</section>
+			<section id="xp-to-points" class="section-box">
+				<h2 class="heading-section">XP to Points Converter</h2>
+				<div class=".input-box">
+					<label for="xp-input" class="input-label">XP</label>
+					<input type="number" id="xp-input" min="0" step="10000" placeholder="Enter XP" class="input-field" />
+					<div id="xp-input-error" class="error-message"></div>
+				</div>
+				<div class="results-container">
+					<div class="result-box">
+						<span class="result-label">Total Points</span>
+						<span id="total-points" class="result-value" data-output="pts">-</span>
+					</div>
+					<div class="result-box">
+						<span class="result-label">Points per XP</span>
+						<span id="points-per-xp" class="result-value" data-output="ratio">-</span>
+					</div>
+				</div>
+				<div class="mt-8">
+					<h3 class="text-lg font-medium mb-4 dark:text-white">Points to XP Relationship</h3>
+					<div class="h-[300px] border border-border rounded-lg bg-background p-4">
+						<div id="xp-points-graph" class="graph"></div>
 					</div>
 				</div>
 			</section>
@@ -176,7 +223,7 @@
 				<div class="results-container">
 					<div class="result-box">
 						<span class="result-label">Combo Score</span>
-						<span id="combo-score-result" class="result-value">-</span>
+						<span id="combo-score-result" class="result-value" data-output="score">-</span>
 					</div>
 				</div>
 			</section>

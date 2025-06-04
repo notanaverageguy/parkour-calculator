@@ -34,7 +34,7 @@ class Background {
         this.mouse = { x: 0, y: 0 };
         this.maxConnections = 3;
         this.connectionDistance = 200;
-        this.dotCount = Math.floor((window.innerWidth * window.innerHeight) / 40000);
+        this.dotCount = Math.floor((window.innerWidth * window.innerHeight) / 30000);
         this.isDark = document.documentElement.classList.contains('dark');
 
         this.init();
