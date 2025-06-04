@@ -54,7 +54,7 @@
 	}
 
 	.math {
-		@apply text-white dark:text-gray-200 text-lg mb-4
+		@apply text-black dark:text-gray-200 text-lg mb-4
 	}
 
 }

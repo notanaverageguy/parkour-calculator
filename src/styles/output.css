@@ -576,7 +576,7 @@
     margin-bottom: calc(var(--spacing) * 4);
     font-size: var(--text-lg);
     line-height: var(--tw-leading, var(--text-lg--line-height));
-    color: var(--color-white);
+    color: var(--color-black);
     &:where(.dark, .dark *) {
       color: var(--color-gray-200);
     }
