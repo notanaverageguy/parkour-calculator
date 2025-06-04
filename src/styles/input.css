@@ -10,7 +10,7 @@
 
 @layer components {
 	.nav-link-base {
-		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-300 dark:border-gray-800 hover:border-gray-300 hover:ease-linear text-center md:text-left
+		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-500 dark:hover:text-gray-300 dark:border-gray-800 hover:border-gray-300 hover:ease-linear text-center md:text-left
 	}
 
 	.section-box {
@@ -60,7 +60,7 @@
 }
 body {
 	font-family: var(--font-sans);
-	@apply text-gray-900 dark:bg-gray-950 duration-[1s] ease-in-out;
+	@apply text-gray-900 dark:bg-black duration-[1s] ease-in-out;
 }
 
 html {
@@ -78,7 +78,7 @@ html {
   --color-gray-700: oklch(0.372 0.0 0.0);
   --color-gray-800: oklch(0.279 0.0 0.0);
   --color-gray-900: oklch(0.208 0.0 0.0);
-  --color-gray-950: oklch(0.129 0.0 0.0);
+  --color-gray-950: oklch(0.179 0.0 0.0);
 }
 
 input,

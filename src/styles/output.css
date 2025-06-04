@@ -16,7 +16,7 @@
     --color-gray-700: oklch(0.372 0.0 0.0);
     --color-gray-800: oklch(0.279 0.0 0.0);
     --color-gray-900: oklch(0.208 0.0 0.0);
-    --color-gray-950: oklch(0.129 0.0 0.0);
+    --color-gray-950: oklch(0.179 0.0 0.0);
     --color-zinc-200: oklch(92% 0.004 286.32);
     --color-neutral-300: oklch(87% 0 0);
     --color-neutral-400: oklch(70.8% 0 0);
@@ -428,7 +428,14 @@
       border-color: var(--color-gray-800);
     }
     &:where(.dark, .dark *) {
-      color: var(--color-gray-300);
+      color: var(--color-gray-500);
+    }
+    &:where(.dark, .dark *) {
+      &:hover {
+        @media (hover: hover) {
+          color: var(--color-gray-300);
+        }
+      }
     }
   }
   .section-box {
@@ -590,7 +597,7 @@ body {
   --tw-ease: var(--ease-in-out);
   transition-timing-function: var(--ease-in-out);
   &:where(.dark, .dark *) {
-    background-color: var(--color-gray-950);
+    background-color: var(--color-black);
   }
 }
 html {
