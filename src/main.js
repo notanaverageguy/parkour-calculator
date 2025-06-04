@@ -17,7 +17,7 @@ calculator.setExpression({ id: 'm', latex: '\\frac{x^{1.0501716659439975}}{2x}',
 const xp_pts_graph = document.getElementById('xp-points-graph');
 const calculator2 = Desmos.GraphingCalculator(xp_pts_graph, {
     xAxisLabel: 'Points',
-    yAxisLabel: 'Xp Per Point',
+    yAxisLabel: 'Points Per Xp',
     keypad: false,
     xAxisScale: 'logarithmic',
     expressions: false,
