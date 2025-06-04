@@ -376,12 +376,6 @@
     }
     &:hover {
       @media (hover: hover) {
-        --tw-duration: 100ms;
-        transition-duration: 100ms;
-      }
-    }
-    &:hover {
-      @media (hover: hover) {
         --tw-ease: linear;
         transition-timing-function: linear;
       }
@@ -410,18 +404,6 @@
     &:hover {
       @media (hover: hover) {
         border-color: var(--color-gray-400);
-      }
-    }
-    &:hover {
-      @media (hover: hover) {
-        --tw-duration: 100ms;
-        transition-duration: 100ms;
-      }
-    }
-    &:hover {
-      @media (hover: hover) {
-        --tw-ease: linear;
-        transition-timing-function: linear;
       }
     }
     &:where(.dark, .dark *) {
@@ -462,6 +444,10 @@
   .input-box {
     position: relative;
     margin-bottom: calc(var(--spacing) * 6);
+    --tw-duration: 1s;
+    transition-duration: 1s;
+    --tw-ease: var(--ease-in-out);
+    transition-timing-function: var(--ease-in-out);
   }
   .input-label {
     margin-bottom: calc(var(--spacing) * 2);
@@ -470,10 +456,6 @@
     line-height: var(--tw-leading, var(--text-base--line-height));
     --tw-font-weight: var(--font-weight-medium);
     font-weight: var(--font-weight-medium);
-    --tw-duration: 1s;
-    transition-duration: 1s;
-    --tw-ease: var(--ease-in-out);
-    transition-timing-function: var(--ease-in-out);
     &:where(.dark, .dark *) {
       color: var(--color-gray-300);
     }
@@ -489,10 +471,6 @@
     padding-block: calc(var(--spacing) * 2);
     font-size: var(--text-xl);
     line-height: var(--tw-leading, var(--text-xl--line-height));
-    --tw-duration: 1s;
-    transition-duration: 1s;
-    --tw-ease: var(--ease-in-out);
-    transition-timing-function: var(--ease-in-out);
     &:hover {
       @media (hover: hover) {
         border-color: var(--color-gray-600);

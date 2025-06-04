@@ -5,7 +5,7 @@ class Dot {
         this.canvas = canvas;
         this.vx = (Math.random() - 0.5) * 0.5;
         this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = 2;
+        this.radius = 3;
         this.connections = [];
     }
 

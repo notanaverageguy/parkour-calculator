@@ -10,11 +10,11 @@
 
 @layer components {
 	.nav-link-base {
-		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-300 dark:border-gray-800 hover:border-gray-300 hover:duration-100 hover:ease-linear text-center md:text-left
+		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-300 dark:border-gray-800 hover:border-gray-300 hover:ease-linear text-center md:text-left
 	}
 
 	.section-box {
-		@apply bg-white p-8 border border-gray-200 rounded-lg dark:bg-gray-950 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 hover:duration-100 hover:ease-linear duration-[1s] ease-in-out
+		@apply bg-white p-8 border border-gray-200 rounded-lg dark:bg-gray-950 dark:border-gray-800 hover:border-gray-400 dark:hover:border-gray-600 duration-[1s] ease-in-out
 	}
 
 	.heading-section {
@@ -26,15 +26,15 @@
 	}
 	
 	.input-box {
-		@apply relative mb-6 
+		@apply relative mb-6 duration-[1s] ease-in-out
 	}
 
 	.input-label {
-		@apply block mb-2 text-base font-medium dark:text-gray-300 duration-[1s] ease-in-out
+		@apply block mb-2 text-base font-medium dark:text-gray-300
 	}
 
 	.input-field { 
-		@apply w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xl focus:outline-none hover:border-gray-600 focus:border-gray-700 dark:text-gray-300 dark:border-gray-800 dark:bg-gray-900 duration-[1s] ease-in-out
+		@apply w-full px-3 py-2 bg-white border border-gray-200 rounded-lg text-xl focus:outline-none hover:border-gray-600 focus:border-gray-700 dark:text-gray-300 dark:border-gray-800 dark:bg-gray-900
 	}
 
 	.results-container {
