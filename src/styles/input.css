@@ -52,8 +52,12 @@
 	.result-value {
 		@apply text-xl font-semibold dark:text-gray-300
 	}
-}
 
+	.math {
+		@apply text-white dark:text-gray-200 text-lg mb-4
+	}
+
+}
 body {
 	font-family: var(--font-sans);
 	@apply text-gray-900 dark:bg-gray-950 duration-[1s] ease-in-out;

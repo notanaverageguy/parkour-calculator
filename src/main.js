@@ -228,4 +228,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initNavigation();
     autoInitSections();
+
+	hljs.highlightAll();
 });

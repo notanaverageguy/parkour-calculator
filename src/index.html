@@ -19,7 +19,12 @@
 	<script type="module" src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.20.1/cdn/shoelace-autoloader.js"></script>
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<script src="https://www.desmos.com/api/v1.11/calculator.js?apiKey=dcb31709b452b1cf9dc26972add0fda6"></script>
+	<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/atom-one-dark.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
 
+	<!-- and it's easy to individually load additional languages -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/languages/javascript.min.js"></script>
 	<link href="./styles/output.css" rel="stylesheet">
 	<script src="./main.js" defer></script>
 	<script src="./background.js" defer></script>
@@ -53,6 +58,7 @@
 				<li><a href="#points-to-xp" class="nav-link-base">Points to XP</a></li>
 				<li><a href="#xp-to-points" class="nav-link-base">Xp to Points</a></li>
 				<li><a href="#combo-score" class="nav-link-base">Combo Score</a></li>
+				<li><a href="#nerds" class="nav-link-base">Math & Code</a></li>
 			</ul>
 		</aside>
 		<main class="space-y-8">
@@ -227,6 +233,154 @@
 					</div>
 				</div>
 			</section>
+<section id="nerds" class="section-box">
+	<h2 class="heading-section">Behind the Math</h2>
+	<p class="mb-8 text-neutral-600 dark:text-neutral-300">
+		This section breaks down the formulas and code used in each calculator. Each subsection shows the math used, an explanation, and the JavaScript powering the result.
+	</p>
+
+	<div class="space-y-12">
+		<!-- Points <-> XP -->
+		<div class="math-section">
+			<h3 class="text-lg font-semibold mb-2 dark:text-white">1. Points ↔ XP Conversion</h3>
+			<p class="mb-2 text-sm text-neutral-500 dark:text-neutral-400">
+				These formulas convert between points and XP using a custom exponent that determines the rate of gain:
+			</p>
+			<div class="math text-lg mb-4">
+				$$ \text{XP} = 0.5 \cdot \text{Points}^{1.05017} $$
+				$$ \text{Points} = 2 \cdot \text{XP}^{1 / 1.05017} $$
+			</div>
+			<pre><code class="language-js">
+const XP_POWER = 1.0501716659439975;
+// Math above has is truncated to make it easier
+
+function pointsToXP(pts) {
+	return 0.5 * Math.pow(pts, XP_POWER);
+}
+
+function xpToPoints(xp) {
+	return 2 * Math.pow(xp, 1 / XP_POWER);
+}
+			</code></pre>
+		</div>
+
+		<!-- Level <-> XP (with real math) -->
+		<div class="math-section">
+			<h3 class="text-lg font-semibold mb-2 dark:text-white">2. XP Between Levels</h3>
+			<p class="mb-2 text-sm text-neutral-500 dark:text-neutral-400">
+				Instead of a simple power function, level XP is calculated using a step-based growth formula:
+			</p>
+			<div class="math text-lg mb-4">
+				$$ \text{XP}_{\text{level}} = \int_{x=\text{start}}^{\text{end}} (10 + \lfloor x \rfloor^2) \cdot 30 $$
+			</div>
+			<pre><code class="language-js">
+function calculateXPBetweenLevels(start, end) {
+	let totalXP = 0;
+	for (let x = start; x < end; x += 0.01) {
+		const f = Math.floor(x);
+		totalXP += (10 + f * f) * 0.01;
+	}
+	return Math.round(totalXP * 30);
+}
+			</code></pre>
+		</div>
+
+		<!-- Points to Level -->
+		<div class="math-section">
+			<h3 class="text-lg font-semibold mb-2 dark:text-white">3. Points to Level Estimation</h3>
+			<p class="text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+				Uses the XP calculated from your points, then estimates your level by comparing against XP thresholds.
+			</p>
+			<pre><code class="language-js">
+function calculateLevelFromPoints(base, pts) {
+	const xp = pointsToXP(pts);
+	let currXP = 0, lvl = base;
+	while (true) {
+		const nextXP = calculateXPBetweenLevels(lvl, lvl + 1);
+		if (currXP + nextXP > xp) {
+			return { level: lvl + (xp - currXP) / nextXP, xp };
+		}
+		currXP += nextXP;
+		lvl++;
+	}
+}
+			</code></pre>
+		</div>
+
+		<!-- XP to Level -->
+		<div class="math-section">
+			<h3 class="text-lg font-semibold mb-2 dark:text-white">4. XP to Level Estimation</h3>
+			<p class="text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+				Takes a raw XP value and determines your fractional level and how many points that XP equals.
+			</p>
+			<pre><code class="language-js">
+function calculateLevelFromXP(base, xp) {
+	let currXP = 0, lvl = base;
+	while (true) {
+		const nextXP = calculateXPBetweenLevels(lvl, lvl + 1);
+		if (currXP + nextXP > xp) {
+			return { level: lvl + (xp - currXP) / nextXP, pts: xpToPoints(xp) };
+		}
+		currXP += nextXP;
+		lvl++;
+	}
+}
+			</code></pre>
+		</div>
+
+		<!-- Level Range Summary -->
+		<div class="math-section">
+			<h3 class="text-lg font-semibold mb-2 dark:text-white">5. XP & Points for Level Range</h3>
+			<p class="text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+				Gets total XP and equivalent points between two levels.
+			</p>
+			<pre><code class="language-js">
+const startXP = calculateXPBetweenLevels(start, end);
+const requiredPoints = xpToPoints(startXP);
+			</code></pre>
+		</div>
+
+		<!-- Time Estimator -->
+		<div class="math-section">
+			<h3 class="text-lg font-semibold mb-2 dark:text-white">6. Time Estimator</h3>
+			<p class="text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+				Calculates time in hours, minutes, and seconds to reach a target level based on points per minute.
+			</p>
+			<div class="math text-lg mb-4">
+				$$ \text{Minutes} = \frac{\text{Points Required}}{\text{Points Per Minute}} $$
+			</div>
+			<pre><code class="language-js">
+function calculateTimeEstimate(start, end, ppm) {
+	const pts = Math.round(xpToPoints(calculateXPBetweenLevels(start, end)));
+	const mins = pts / ppm;
+	return {
+		hours: Math.floor(mins / 60),
+		minutes: Math.floor(mins % 60),
+		seconds: Math.round((mins % 1) * 60),
+		totalMinutes: mins
+	};
+}
+			</code></pre>
+		</div>
+
+		<!-- Combo Score -->
+		<div class="math-section">
+			<h3 class="text-lg font-semibold mb-2 dark:text-white">7. Combo Score Calculation</h3>
+			<p class="text-sm text-neutral-500 dark:text-neutral-400 mb-2">
+				Calculates a score based on combos, time, max combo, and number of breaks. Max combo is capped at 5.
+			</p>
+			<div class="math">
+				$$ \text{Score} = \frac{\text{Combos} \cdot \text{Time (s)} \cdot \min(5, \text{Max Combo})}{1.75 \cdot \text{Breaks}} $$
+			</div>
+			<pre><code class="language-js">
+function calculateComboScore(t, l, h, b) {
+	return b === 0 ? 0 : (t * l * Math.min(h, 5)) / (1.75 * b);
+}
+			</code></pre>
+		</div>
+</section>
+
+
 		</main>
 	</div>
 </body>
