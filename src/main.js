@@ -129,15 +129,12 @@ const SECTION_FUNCTIONS = {
 };
 
 function validateInputEl(el) {
-    const val = parseFloat(el.value);
+    const cleanedValue = (el.value || '').replace(/[^0-9.\-eE]/g, '');
+    const val = parseFloat(cleanedValue);
     const min = parseFloat(el.min || '-Infinity');
     const errorId = el.dataset.errorId;
     const errorEl = errorId ? document.getElementById(errorId) : null;
 
-    if (isNaN(val)) {
-        if (errorEl) errorEl.textContent = 'Enter a valid number';
-        return null;
-    }
     if (val < min) {
         if (errorEl) errorEl.textContent = `Must be at least ${min}`;
         return null;
