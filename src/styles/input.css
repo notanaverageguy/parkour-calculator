@@ -10,7 +10,7 @@
 
 @layer components {
 	.nav-link-base {
-		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-500 dark:hover:text-gray-300 dark:border-gray-800 hover:border-gray-300 hover:ease-linear text-center md:text-left
+		@apply block px-4 py-2 text-gray-900 rounded-lg border duration-[1s] ease-in-out dark:text-gray-500 dark:hover:text-gray-300 dark:border-gray-800 hover:border-gray-300 hover:ease-linear text-center
 	}
 
 	.section-box {
@@ -55,6 +55,38 @@
 
 	.math {
 		@apply text-black dark:text-gray-200 text-lg mb-4
+	}
+
+	.table-container {
+		@apply overflow-x-auto rounded-xl border-blue-400 border
+	}
+
+	.data-table {
+		@apply w-full overflow-hidden shadow-sm 
+	}
+
+	.table-header-cell {
+		@apply px-4 py-3 text-left font-medium first:rounded-xl last:rounded-xl text-black dark:text-white
+	}
+
+	.table-body {
+		@apply border-blue-400
+	}
+
+	.table-row {
+		@apply transition-colors duration-200
+	}
+
+	.table-row:last-child .table-cell:first-child {
+		@apply rounded-bl-xl
+	}
+
+	.table-row:last-child .table-cell:last-child {
+		@apply rounded-br-xl
+	}
+
+	.table-cell {
+		@apply px-4 py-3 text-neutral-700 dark:text-neutral-300
 	}
 
 }

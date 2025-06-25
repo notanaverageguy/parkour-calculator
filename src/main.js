@@ -228,6 +228,22 @@ document.addEventListener('DOMContentLoaded', () => {
     initTheme();
     initNavigation();
     autoInitSections();
+    initCollapsibleHelp();
 
 	hljs.highlightAll();
 });
+
+// === Collapsible Help ===
+function initCollapsibleHelp() {
+    const toggleButton = document.getElementById('time-estimator-help-toggle');
+    const content = document.getElementById('time-estimator-help-content');
+    const icon = document.getElementById('time-estimator-help-icon');
+    
+    if (toggleButton && content && icon) {
+        toggleButton.addEventListener('click', () => {
+            const isHidden = content.classList.contains('hidden');
+            content.classList.toggle('hidden', !isHidden);
+            icon.style.transform = isHidden ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    }
+}
