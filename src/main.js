@@ -135,6 +135,11 @@ function validateInputEl(el) {
     const errorId = el.dataset.errorId;
     const errorEl = errorId ? document.getElementById(errorId) : null;
 
+	if (isNaN(val)) {
+		if (errorEl) errorEl.textContent = `Not a valid number`;
+        return null;
+	}
+	
     if (val < min) {
         if (errorEl) errorEl.textContent = `Must be at least ${min}`;
         return null;
