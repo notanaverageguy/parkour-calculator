@@ -154,13 +154,11 @@ class Background {
 
         const colors = this.getThemeColors();
 
-        // Update and draw dots
         for (const dot of this.dots) {
             dot.update();
             dot.draw(this.ctx, colors.dot);
         }
 
-        // Draw connections
         this.drawConnections();
 
         requestAnimationFrame(() => this.animate());
