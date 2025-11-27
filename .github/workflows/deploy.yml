@@ -56,13 +56,3 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
-@AxewBoTX
-
-@AndrewLester
-Author
-AndrewLester
-commented
-on Jan 23, 2024
-•
-using adapter-static instead of just adapter-auto @AxewBoTX
-
