@@ -9,6 +9,10 @@
 	import PointsToLevel from '$lib/components/calculator/PointsToLevel.svelte';
 </script>
 
+<svelte:head>
+	<title>Parkour Calculator</title>
+</svelte:head>
+
 <div class="flex justify-center">
 	<MetaBalls />
 	<div class="inline-grid xl:max-w-9/12 xl:grid-cols-2">
