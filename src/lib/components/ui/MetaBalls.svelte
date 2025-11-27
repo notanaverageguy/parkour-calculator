@@ -4,10 +4,25 @@
 	import { onMount } from 'svelte';
 	import { mat3, mat4, vec2, vec3, vec4 } from 'gl-matrix';
 
-	const ballCount = 50;
+	let ballCount;
 	let canvas;
 
 	onMount(() => {
+		function get_ball_count() {
+			const area = window.innerWidth * window.innerHeight;
+
+			const oneK = 1280 * 720; // ~1K
+			const twoK = 2560 * 1440; // ~2K
+
+			const minBalls = 25;
+			const maxBalls = 50;
+
+			// Normalize between 1K and 2K
+			const t = Math.min(Math.max((area - oneK) / (twoK - oneK), 0), 1);
+
+			return Math.round(minBalls + t * (maxBalls - minBalls));
+		}
+		ballCount = get_ball_count();
 		const gl = canvas.getContext('webgl2');
 		if (!gl) throw new Error('No GL For you!');
 
