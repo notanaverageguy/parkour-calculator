@@ -1,7 +1,4 @@
 <script lang="ts">
-	export const prerender = true;
-
-	export const trailingSlash = 'always';
 	import './layout.css';
 	import favicon from '$lib/assets/favicon.svg';
 
