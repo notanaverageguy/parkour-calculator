@@ -11,9 +11,9 @@
 
 <div class="relative inline-block">
 	<button
-		class={`m-0.5 cursor-pointer rounded-lg px-5 py-2 text-base text-white
-		        transition-all duration-150 active:scale-95
-		        ${on ? 'bg-green-800' : 'bg-neutral-800'}`}
+		class={`m-0.5 cursor-pointer rounded-lg px-5 py-2 text-base transition-all
+		        duration-150 active:scale-95 dark:text-white
+		        ${on ? 'bg-green-500 dark:bg-green-800' : 'bg-gray-300 dark:bg-neutral-800'}`}
 		on:click={toggle}
 		on:mouseenter={() => (show = true)}
 		on:mouseleave={() => (show = false)}

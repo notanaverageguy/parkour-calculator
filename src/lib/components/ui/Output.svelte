@@ -2,7 +2,7 @@
 	export let label = '';
 </script>
 
-<div class="my-4 rounded-2xl p-3 dark:bg-gray-950">
+<div class="my-4 rounded-2xl bg-gray-300 p-3 dark:bg-gray-950">
 	<h2 class="text-xl">{label}</h2>
 	<p class="my-3">
 		<slot />

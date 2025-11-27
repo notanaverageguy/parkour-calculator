@@ -23,7 +23,7 @@
 	<p class="mb-2">{label}</p>
 	<input
 		type="text"
-		class="w-full rounded-md border-none bg-gray-800 py-2 text-lg"
+		class="w-full rounded-md border-none bg-gray-200 py-2 text-lg dark:bg-gray-800"
 		bind:value={displayValue}
 		on:input={handleInput}
 	/>
