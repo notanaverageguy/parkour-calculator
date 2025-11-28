@@ -14,7 +14,7 @@
 			const oneK = 1280 * 720; // ~1K
 			const twoK = 2560 * 1440; // ~2K
 
-			const minBalls = 25;
+			const minBalls = 15;
 			const maxBalls = 50;
 
 			// Normalize between 1K and 2K
