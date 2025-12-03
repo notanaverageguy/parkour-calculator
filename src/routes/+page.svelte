@@ -39,6 +39,9 @@
 		<Section section_name="Xp To Points">
 			<XpToPoints />
 		</Section>
+		<div class="col-span-2 text-center">
+			<p>I hate mae</p>
+		</div>
 	</div>
 </div>
 <div class="h-dvh"></div>
