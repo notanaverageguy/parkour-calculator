@@ -1,5 +1,5 @@
-<script>
-	import MultiplierButton from '$lib/components/ui/MultiplierButton.svelte';
+<script lang="ts">
+	import MultiplierButton from '../ui/MultiplierButton.svelte';
 	import Input from '../ui/Input.svelte';
 	import Output from '../ui/Output.svelte';
 
@@ -15,18 +15,21 @@
 	let playtime_multiplier = 1;
 	let robux_multiplier = 0;
 
-	$: final_multiplier = (() => {
-		let multiplier =
-			1 +
-			Number(is_weekend) * 0.2 +
-			Number(is_night) * 0.2 +
-			Number(is_halloween) +
-			Number(in_group) * 0.2 +
-			Number(in_ranked) * 0.5 +
-			(Number(highest_elo) / 3100) * 0.35 +
-			Number(robux_multiplier);
+	const boost = (condition: boolean, value: number) => (condition ? value : 0);
 
-		multiplier *= Number(playtime_multiplier);
+	$: final_multiplier = (() => {
+		let multiplier = 1;
+
+		multiplier += boost(is_weekend, 0.2);
+		multiplier += boost(is_night, 0.2);
+		multiplier += boost(is_halloween, 1);
+		multiplier += boost(in_group, 0.2);
+		multiplier += boost(in_ranked, 0.5);
+
+		multiplier += (highest_elo / 3100) * 0.35;
+		multiplier += robux_multiplier;
+
+		multiplier *= playtime_multiplier;
 
 		if (robux_points_gamepass) {
 			multiplier *= 1.5;
